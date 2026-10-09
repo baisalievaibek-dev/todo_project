@@ -1,0 +1,46 @@
+Metadata-Version: 2.4
+Name: todo-api
+Version: 0.1.0
+Summary: A task management API built with Django REST framework
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: Django<6.0,>=5.1
+Requires-Dist: djangorestframework<4.0,>=3.15
+
+# API списка задач
+
+REST API для управления задачами на Django REST framework. API использует
+токенную аутентификацию: для работы с задачами нужен заголовок
+`Authorization: Token <ключ>`.
+
+## Установка и запуск
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
+
+Для получения токена отправьте `POST` на `/api/token/` с полями `username` и
+`password`. Django admin доступен по адресу `/admin/`.
+
+## Эндпоинты
+
+- `GET /api/tasks/` список задач; поддерживает `?completed=true` или `false`.
+- `POST /api/tasks/` создание задачи.
+- `GET /api/tasks/{id}/` получение задачи.
+- `PUT/PATCH /api/tasks/{id}/` обновление задачи.
+- `DELETE /api/tasks/{id}/` удаление задачи.
+
+Список разбит на страницы по 10 задач. Номер страницы передаётся параметром
+`?page=2`; размер страницы можно изменить параметром `?page_size=20` (максимум
+100).
+
+## Тесты
+
+```bash
+python manage.py test
+```
